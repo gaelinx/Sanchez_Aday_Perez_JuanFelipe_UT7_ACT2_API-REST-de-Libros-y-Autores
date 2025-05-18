@@ -1,4 +1,8 @@
 package com.myapp.biblioapp.repository;
 
-public interface AutorRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.myapp.biblioapp.model.Autor;
+
+public interface AutorRepository extends JpaRepository<Autor, Long>{
+
 }
