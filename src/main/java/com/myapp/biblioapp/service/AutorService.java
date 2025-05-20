@@ -31,4 +31,15 @@ public class AutorService {
         autorRepository.deleteById(id);
     }
 
+    public Autor update(Long id, Autor autor) {
+        if (autorRepository.existsById(id)) {
+            autor.setId(id);
+            return autorRepository.save(autor);
+        } else {
+            return null; 
+            
+        } 
+       
+    }
+
 }

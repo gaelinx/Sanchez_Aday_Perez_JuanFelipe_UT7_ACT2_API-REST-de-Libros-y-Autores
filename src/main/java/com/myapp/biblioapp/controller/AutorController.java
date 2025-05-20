@@ -32,4 +32,8 @@ public class AutorController {
         autorService.deleteAutor(id);
     }
 
+    @PutMapping("/{id}") public Autor updateAutor(@PathVariable Long id, @RequestBody Autor autor) {
+        return autorService.update(id, autor);
+    }
+
 }
