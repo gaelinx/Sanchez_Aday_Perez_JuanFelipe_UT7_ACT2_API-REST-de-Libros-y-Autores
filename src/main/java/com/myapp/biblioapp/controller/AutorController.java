@@ -28,4 +28,8 @@ public class AutorController {
         return autorService.save(autor);
     }
 
+    @DeleteMapping("/{id}") public void deleteAutor(@PathVariable Long id) {
+        autorService.deleteAutor(id);
+    }
+
 }
