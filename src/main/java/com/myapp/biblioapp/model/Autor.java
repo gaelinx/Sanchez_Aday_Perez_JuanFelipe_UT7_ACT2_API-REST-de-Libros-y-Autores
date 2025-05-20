@@ -1,7 +1,17 @@
 package com.myapp.biblioapp.model;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "autor")
@@ -13,15 +23,19 @@ public class Autor {
     private String nombre;
     private String nacionalidad;
 
-    @OneToMany(mappedBy="autor")
-    private List<Libro> libros;
+    @OneToMany(mappedBy="autor",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Libro> libros = new ArrayList<>();
 
     public Autor() {}
     public Autor(String nombre, String nacionalidad) {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -50,5 +64,5 @@ public class Autor {
         this.libros = libros;
     }
 
-    
+
 }

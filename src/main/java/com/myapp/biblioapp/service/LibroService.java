@@ -1,10 +1,13 @@
 package com.myapp.biblioapp.service;
 
-import com.myapp.biblioapp.model.Libro;
-import com.myapp.biblioapp.repository.LibroRepository;
+import java.time.Year;
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.myapp.biblioapp.model.Libro;
+import com.myapp.biblioapp.repository.LibroRepository;
 
 @Service
 public class LibroService {
@@ -25,6 +28,18 @@ public class LibroService {
     }
 
     //filtros
+
+    public List<Libro> buscarLibro(String titulo, Integer anioMin, Integer anioMax, Sort sort) {
+        // Validación de años
+        if (anioMin != null && anioMax != null && anioMin > anioMax) {
+            throw new IllegalArgumentException("El año mínimo no puede ser mayor al año máximo");
+        }
+        String filtroTitulo = (titulo == null || titulo.isBlank()) ? "%" : "%" + titulo.toLowerCase() + "%";
+        int filtroAnioMin = (anioMin == null) ? 0 : anioMin;
+        int filtroAnioMax = (anioMax == null) ? Year.now().getValue() : anioMax;
+        return libroRepository.findByTituloLikeIgnoreCaseAndAnioPublicacionBetween(
+                filtroTitulo, filtroAnioMin, filtroAnioMax, sort);
+    }
 
     //buscar por titulo
     //buscar por año

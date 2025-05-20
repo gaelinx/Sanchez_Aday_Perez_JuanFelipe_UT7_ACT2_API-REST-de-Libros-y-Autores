@@ -1,9 +1,12 @@
 package com.myapp.biblioapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -17,6 +20,11 @@ public class Libro {
     private String titulo;
     private String isbn;
     private int anioPublicacion;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Autor")
+    @JsonBackReference
+    private Autor autor;
 
     public Libro() {}
 
@@ -55,6 +63,14 @@ public class Libro {
 
     public void setAnioPublicacion(int anioPublicacion) {
         this.anioPublicacion = anioPublicacion;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
 
